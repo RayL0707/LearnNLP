@@ -9,13 +9,14 @@ class NLPanalyzer(object):
     def __init__(self):
         self.nlp = BosonNLP(self.__getAPI())
         self.text = self.__getTXT()
+        print(self.nlp.sentiment(self.text))
     def __getAPI(self):
         with open(API_PATH, "r") as api:
             return api.read().split('\n')[0]
 
     def __getTXT(self):
         with open(INPUT_PATH, "r") as data:
-            text = data.read()
+            text = "".join(data.read().split())
             return text
 
     def getTopKeyWords(self, k):
@@ -30,19 +31,50 @@ class NLPanalyzer(object):
     def getTokens(self):
         result = self.nlp.tag(self.text)
         for d in result:
-            print(' '.join(['%s/%s\n' % it for it in zip(d['word'], d['tag'])]))
+            print(' '.join(['%s/%s' % it for it in zip(d['word'], d['tag'])]))
+
+    def getEntity(self):
+        result = self.nlp.ner(self.text)[0]
+        words = result['word']
+        entities = result['entity']
+        dicts = {}
+        for entity in entities:
+            word, cluster = ''.join(words[entity[0]:entity[1]]), entity[2]
+            if cluster in dicts:
+                dicts[cluster].append(word)
+            else:
+                dicts[cluster] = [word]
+
+        for key, value in dicts.items():
+            print("%s: %s" %(key, ", ".join(value)))
+        return dicts
+
+
 
 if __name__ == "__main__":
     NLPanalyzer = NLPanalyzer()
-    print("original text:\n")
-    print(NLPanalyzer.text)
+    # print("#####################\n")
+    # print("original text:\n")
+    # print("#####################\n")
+    # print(NLPanalyzer.text)
+    #
+    # print("#####################\n")
+    # print("Summary:\n")
+    # print("#####################\n")
+    # NLPanalyzer.getSummary()
+    #
+    # print("#####################\n")
+    # print("top %d key words:\n" % KEYS)
+    # print("#####################\n")
+    # NLPanalyzer.getTopKeyWords(KEYS)
+    #
+    # print("#####################\n")
+    # print("Tokens: \n")
+    # print("#####################\n")
+    # NLPanalyzer.getTokens()
 
-    print("top key words: %d\n", (KEYS))
-    NLPanalyzer.getTopKeyWords(KEYS)
-
-    print("Summary: %d\n")
-    NLPanalyzer.getSummary()
-
-    print("Tokens: \n")
-    NLPanalyzer.getTokens()
+    print("#####################\n")
+    print("Entities: \n")
+    print("#####################\n")
+    NLPanalyzer.getEntity()
 
