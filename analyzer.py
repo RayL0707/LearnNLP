@@ -53,25 +53,25 @@ class NLPanalyzer(object):
 
 if __name__ == "__main__":
     NLPanalyzer = NLPanalyzer()
-    # print("#####################\n")
-    # print("original text:\n")
-    # print("#####################\n")
-    # print(NLPanalyzer.text)
-    #
-    # print("#####################\n")
-    # print("Summary:\n")
-    # print("#####################\n")
-    # NLPanalyzer.getSummary()
-    #
-    # print("#####################\n")
-    # print("top %d key words:\n" % KEYS)
-    # print("#####################\n")
-    # NLPanalyzer.getTopKeyWords(KEYS)
-    #
-    # print("#####################\n")
-    # print("Tokens: \n")
-    # print("#####################\n")
-    # NLPanalyzer.getTokens()
+    print("#####################\n")
+    print("original text:\n")
+    print("#####################\n")
+    print(NLPanalyzer.text)
+
+    print("#####################\n")
+    print("Summary:\n")
+    print("#####################\n")
+    NLPanalyzer.getSummary()
+
+    print("#####################\n")
+    print("top %d key words:\n" % KEYS)
+    print("#####################\n")
+    NLPanalyzer.getTopKeyWords(KEYS)
+
+    print("#####################\n")
+    print("Tokens: \n")
+    print("#####################\n")
+    NLPanalyzer.getTokens()
 
     print("#####################\n")
     print("Entities: \n")
